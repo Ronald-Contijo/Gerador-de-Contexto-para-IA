@@ -1,4 +1,4 @@
-module your-app
+module gatinho
 
 go 1.22
 

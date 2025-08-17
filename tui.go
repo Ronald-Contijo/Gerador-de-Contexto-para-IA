@@ -17,12 +17,14 @@ const (
 	stageRender
 	stageDone
 )
-
 type model struct {
 	// config
 	dir      string
 	outFile  string
 	maxBytes int64
+
+	// NOVO
+	ignoreContentDirs []string
 
 	// ui
 	stg         stage
@@ -132,8 +134,9 @@ func (m model) Init() tea.Cmd {
 	return tea.Batch(
 		m.spin.Tick,
 		tickColor(),
-		startScan(m.dir, m.outFile),
+		startScan(m.dir, m.outFile, m.ignoreContentDirs),
 	)
+	
 }
 
 func tickColor() tea.Cmd {
@@ -145,8 +148,8 @@ func tickProgress() tea.Cmd {
 	return tea.Tick(70*time.Millisecond, func(time.Time) tea.Msg { return tickProgressMsg{} })
 }
 
-func startScan(dir, outFile string) tea.Cmd {
-	// monta árvore e coleta os arquivos de código
+
+func startScan(dir, outFile string, ignoreContentDirs []string) tea.Cmd {
 	return func() tea.Msg {
 		root, err := buildTree(dir, defaultSkipDirs())
 		if err != nil {
@@ -155,13 +158,17 @@ func startScan(dir, outFile string) tea.Cmd {
 		var lines []string
 		printTree(root, "", &lines)
 
-		cf, err := collectCodeFiles(dir, outFile, defaultLangByExt())
+		// passa ignoreContentDirs aqui
+		cf, err := collectCodeFiles(dir, outFile, defaultLangByExt(), ignoreContentDirs)
 		if err != nil {
 			return errMsg{err}
 		}
 		return scanDoneMsg{lines: lines, codeFiles: cf}
 	}
 }
+
+
+
 
 func startRender(dir, outFile string, tree []string, code []codeFile, maxBytes int64) tea.Cmd {
 	// gera o markdown de forma síncrona; a barra é animada por tickProgress

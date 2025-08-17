@@ -19,6 +19,7 @@ func defaultLangByExt() map[string]string {
 func defaultSkipDirs() map[string]bool {
 	return map[string]bool{
 		".git": true, "node_modules": true, "dist": true, "build": true,
-		"out": true, "venv": true, ".venv": true, ".idea": true, ".vscode": true,"":true,
+		
+		"out": true, "venv": true, ".venv": true, ".idea": true, ".vscode": true,"":true, ".sqlite3":true, ".sqlite":true, ".db":true, ".db3":true,".crush":true, ".pyc":true,
 	}
 }
