@@ -5,7 +5,8 @@ O objetivo é gerar automaticamente documentação de um diretório de código, 
 - Conteúdo dos arquivos reconhecidos (códigos, scripts, etc.).
 - Arquivo final em formato Markdown.
 
-A idéia é mandar de contexto pra alguma IA, como o ChatGePeto, para que ele tenha um contexto
+A idéia é mandar de contexto pra alguma IA, como o ChatGePeto, para que ele tenha um contexto.
+É a primeira coisa que eu faço com Go, então provavelmente não está de acordo com as melhores práticas.
 ```
 .............................................................-%@@@%-...................
 ........  ...=*##*=-.................................... ..=@@@@#%@@+..................
